@@ -1,0 +1,24 @@
+specVersion: 0.2.0
+name: alephZeroScan-subql-starter
+version: 1.0.0
+description: subql starter for alephZeroScan
+repository: "https://github.com/parascan/alephZeroScan-subql-starter"
+schema:
+  file: ./schema.graphql
+
+network: https://alephzero.subscan.io/
+
+  genesisHash: "0x70255b4d28de0fc4e1a193d7e175ad1ccef431598211c55538f1018651a0344e"
+
+dataSources:
+  - kind: substrate/Runtime
+    startBlock: 1
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleBlock
+          kind: substrate/BlockHandler
+        - handler: handleEvent
+          kind: substrate/EventHandler
+        - handler: handleCall
+          kind: substrate/CallHandler
