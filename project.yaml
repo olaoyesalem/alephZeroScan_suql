@@ -2,11 +2,12 @@ specVersion: 0.2.0
 name: alephZeroScan-subql-starter
 version: 1.0.0
 description: subql starter for alephZeroScan
-repository: "https://github.com/parascan/alephZeroScan-subql-starter"
+repository: "https://github.com/olaoyesalem/alephZeroScan_suql.git"
 schema:
   file: ./schema.graphql
 
-network: https://alephzero.subscan.io/
+network:
+endpoint: https://rpc.azero.dev
 
   genesisHash: "0x70255b4d28de0fc4e1a193d7e175ad1ccef431598211c55538f1018651a0344e"
 
