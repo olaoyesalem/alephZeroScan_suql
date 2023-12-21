@@ -92,32 +92,57 @@ export class Day {
 
 
 // Extrinsic type definition
+// types.ts
+
 export class Extrinsic {
-  // Add properties relevant to the Extrinsic type
+  save() {
+    throw new Error("Method not implemented.");
+  }
   id: string;
   blockId: string;
   blockNumber: bigint;
   index: number;
   hash: string;
- // signerId?: string; // Optional signer reference
   isSigned: boolean;
   section: string;
   method: string;
   success: boolean;
+  signerId?: string; // Assuming signerId is an optional property
 
-  constructor(id: string, blockId: string, blockNumber: bigint, index: number, hash: string, isSigned: boolean, section: string, method: string, success: boolean) {
+  constructor(
+    id: string,
+    blockId: string,
+    blockNumber: bigint,
+    index: number,
+    hash: string,
+    isSigned: boolean,
+    section: string,
+    method: string,
+    success: boolean,
+    signerId?: string
+  ) {
     this.id = id;
     this.blockId = blockId;
     this.blockNumber = blockNumber;
     this.index = index;
     this.hash = hash;
-    // this.signerId = signerId;
     this.isSigned = isSigned;
     this.section = section;
     this.method = method;
     this.success = success;
+    this.signerId = signerId;
   }
+  
+
+  // Add this static method
+  static async get(id: string): Promise<Extrinsic | null> {
+    // Your logic to fetch the Extrinsic by id
+    // Return null if not found
+    return null;
+  }
+
 }
+
 
 // Transfer type definition
 export class Transfer {
@@ -130,7 +155,16 @@ export class Transfer {
   eventIndex: number;
   extrinsicIndex?: number; // Optional extrinsic reference
 
-  constructor(id: string, fromId: string, toId: string, value: bigint, blockId: string, blockNumber: bigint, eventIndex: number, extrinsicIndex?: number) {
+  constructor(
+    id: string,
+    fromId: string,
+    toId: string,
+    value: bigint,
+    blockId: string,
+    blockNumber: bigint,
+    eventIndex: number,
+    extrinsicIndex?: number
+  ) {
     this.id = id;
     this.fromId = fromId;
     this.toId = toId;
@@ -140,4 +174,34 @@ export class Transfer {
     this.eventIndex = eventIndex;
     this.extrinsicIndex = extrinsicIndex;
   }
+
+  // Implement the create method
+  static create(params: {
+    id: string;
+    fromId: string;
+    toId: string;
+    value: bigint;
+    blockId: string;
+    blockNumber: bigint;
+    eventIndex: number;
+    extrinsicIndex?: number;
+  }): Transfer {
+    return new Transfer(
+      params.id,
+      params.fromId,
+      params.toId,
+      params.value,
+      params.blockId,
+      params.blockNumber,
+      params.eventIndex,
+      params.extrinsicIndex
+    );
+  }
+
+  async save(): Promise<void> {
+    const storage: Record<string, Transfer> = {
+      [this.id]: this,
+    };
+  }
+  //ODk1NTUyMzQ=zmORxWMW8USuTSwFd9RR
 }

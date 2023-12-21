@@ -1,4 +1,4 @@
-specVersion: 0.2.0
+specVersion: "4.2.4"
 name: alephZeroScan-subql-starter
 version: 1.0.0
 description: subql starter for alephZeroScan
@@ -7,9 +7,11 @@ schema:
   file: ./schema.graphql
 
 network:
-endpoint: https://rpc.azero.dev
-
+  endpoint: https://rpc.azero.dev
   genesisHash: "0x70255b4d28de0fc4e1a193d7e175ad1ccef431598211c55538f1018651a0344e"
+
+runner:
+  network: substrate
 
 dataSources:
   - kind: substrate/Runtime

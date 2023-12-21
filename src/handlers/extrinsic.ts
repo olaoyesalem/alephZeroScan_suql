@@ -1,3 +1,5 @@
+// extrinsic.ts
+
 import { SubstrateExtrinsic } from "@subql/types";
 import { Extrinsic } from "../types";
 import { ensureBlock } from "./block";
@@ -13,16 +15,22 @@ export async function ensureExtrinsic(
   const index = extrinsic.idx;
   const recordId = `${block.id}-${index}`;
   const hash = extrinsic.extrinsic.hash.toString();
-
   let entity = await Extrinsic.get(recordId);
   if (!entity) {
-    entity = new Extrinsic(recordId);
-    entity.blockId = block.id;
-    entity.blockNumber = block.number;
-    entity.index = index;
-    entity.hash = hash;
-    await entity.save();
+    entity = new Extrinsic(
+      recordId,
+      block.id,
+      block.number,
+      index,
+      hash,
+      extrinsic.extrinsic.isSigned,
+      extrinsic.extrinsic.method.section,
+      extrinsic.extrinsic.method.method,
+      extrinsic.success
+    );
+    await entity.save(); // Assuming save is implemented
   }
+
   return entity;
 }
 
@@ -40,6 +48,6 @@ export async function createExtrinsic(
   entity.section = extrinsic.extrinsic.method.section;
   entity.method = extrinsic.extrinsic.method.method;
   entity.success = extrinsic.success;
-  await entity.save();
+  await entity.save(); // Assuming save is implemented
   await addExtrinsicToDay(extrinsic.block.timestamp);
 }
